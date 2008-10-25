@@ -25,14 +25,9 @@ require_dependency 'exception_notifier'
 
 module RedmineExceptionNotifierPatch
   def self.included(target)
-    target.extend(ClassMethods)
     target.send(:include, InstanceMethods)
   end
 
-  module ClassMethods
-    self.template_root = "#{File.join(File.dirname(__FILE__),'vendor','plugins','exception_notification','view')}"
-  end
-    
   module InstanceMethods
     def exception_notification_with_database(exception, controller, request, data={}, &block)
       exception_notification_without_database(exception, controller, request, data, &block)
