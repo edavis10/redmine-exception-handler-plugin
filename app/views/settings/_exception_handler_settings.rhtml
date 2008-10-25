@@ -1,0 +1,11 @@
+<p>
+  <label>Email recipients</label><br /><label><small>Separate multiple email addresses with commas</small></label><%= text_area_tag 'settings[exception_handler_recipients]', @settings['exception_handler_recipients'], :rows => 5, :cols => 60 %>
+</p>
+
+<p>
+  <label>Sender address</label><%= text_field_tag 'settings[exception_handler_sender_address]', @settings['exception_handler_sender_address'], :size => 60 %>
+</p>
+
+<p>
+  <label>Subject prefix</label><%= text_field_tag 'settings[exception_handler_prefix]', @settings['exception_handler_prefix'], :size => 15 %>
+</p>
