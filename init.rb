@@ -14,7 +14,7 @@ Redmine::Plugin.register :redmine_exception_handler do
   version '0.0.1'
   
   settings :default => {
-    'exception_handler_recipients' => 'you@example.com',
+    'exception_handler_recipients' => 'you@example.com, another@example.com',
     'exception_handler_sender_address' => 'Application Error <redmine@example.com>',
     'exception_handler_prefix' => '[ERROR]'
   }, :partial => 'settings/settings'
@@ -30,6 +30,11 @@ module RedmineExceptionNotifierPatch
 
   module InstanceMethods
     def exception_notification_with_database(exception, controller, request, data={}, &block)
+      if Object.const_defined?('Setting')
+        ExceptionNotifier.exception_recipients = Setting.plugin_redmine_exception_handler['exception_handler_recipients'].split(',').map { |name| name.strip }
+        ExceptionNotifier.sender_address = Setting.plugin_redmine_exception_handler['exception_handler_sender_address']
+        ExceptionNotifier.email_prefix = Setting.plugin_redmine_exception_handler['exception_handler_prefix']
+      end
       exception_notification_without_database(exception, controller, request, data, &block)
     end
 
