@@ -14,7 +14,7 @@ A copy of the plugin can be downloaded from {Little Stream Software}[https://pro
 
 == Install
 
-1. Follow the Redmine plugin installation steps at: http://www.redmine.org/wiki/redmine/Plugins
+1. Follow the Redmine plugin installation steps at: http://www.redmine.org/wiki/redmine/Plugins Make sure the plugin is installed to +vendor/plugins/redmine_exception_handler_plugin+
 2. Login to Redmine as an Administrator
 3. Setup your mail settings in the Plugin settings panel
 4. Test your settings using the "Test settings" link
