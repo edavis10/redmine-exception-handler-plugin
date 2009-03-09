@@ -7,7 +7,7 @@ Dir[File.join(directory,'vendor','plugins','*')].each do |dir|
   ActiveSupport::Dependencies.load_once_paths.delete(path)
 end
 
-Redmine::Plugin.register :exception_handler do
+Redmine::Plugin.register :redmine_exception_handler_plugin do
   name 'Redmine Exception Handler plugin'
   author 'Eric Davis'
   description 'Send emails when exceptions occur in Redmine.'
