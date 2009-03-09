@@ -1,0 +1,7 @@
+en:
+  exception_handler_label_email_recipients: "Email recipients"
+  exception_handler_label_separate_multiple_emails_with_commas: "Separate multiple email addresses with commas"
+  exception_handler_label_sender_address: "Sender address"
+  exception_handler_label_subject_prefix: "Subject prefix"
+  exception_handler_label_test_settings: "Test Settings by triggering a fake exception"
+  exception_handler_label_will_open_in_a_new_window: "(will open in a new window)"
