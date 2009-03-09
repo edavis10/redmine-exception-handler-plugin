@@ -11,7 +11,7 @@ Redmine::Plugin.register :redmine_exception_handler_plugin do
   name 'Redmine Exception Handler plugin'
   author 'Eric Davis'
   description 'Send emails when exceptions occur in Redmine.'
-  version '0.1.0'
+  version '0.2.0'
   
   settings :default => {
     'exception_handler_recipients' => 'you@example.com, another@example.com',
