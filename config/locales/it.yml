@@ -1,0 +1,7 @@
+it:
+  exception_handler_label_email_recipients: "Destinatari"
+  exception_handler_label_separate_multiple_emails_with_commas: "separa gli indirizzi con delle virgole"
+  exception_handler_label_sender_address: "Indirizzo del mittente"
+  exception_handler_label_subject_prefix: "Prefisso del titolo"
+  exception_handler_label_test_settings: "Verifica le impostazioni generando un'eccezione finta"
+  exception_handler_label_will_open_in_a_new_window: "(sarà aperta in una nuova finestra)"
