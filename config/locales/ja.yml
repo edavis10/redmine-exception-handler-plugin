@@ -1,0 +1,7 @@
+ja:
+  exception_handler_label_email_recipients: "メールの宛先"
+  exception_handler_label_separate_multiple_emails_with_commas: "メールアドレスはコンマで区切ってください"
+  exception_handler_label_sender_address: "送信元アドレス"
+  exception_handler_label_subject_prefix: "件名の始まり"
+  exception_handler_label_test_settings: "ニセの例外を発生させて設定をテスト"
+  exception_handler_label_will_open_in_a_new_window: "(別のウィンドウを開きます)"
