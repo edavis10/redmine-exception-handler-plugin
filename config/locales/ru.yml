@@ -3,5 +3,6 @@ ru:
   exception_handler_label_separate_multiple_emails_with_commas: "Разделяйте e-mail'ы запятой"
   exception_handler_label_sender_address: "Адрес отправителя"
   exception_handler_label_subject_prefix: "Префикс темы письма"
+  exception_handler_label_email_format: "E-mail формате"
   exception_handler_label_test_settings: "Проверить настройки вызовом тестовой ошибки"
   exception_handler_label_will_open_in_a_new_window: "(откроется в новом окне)"

@@ -1,0 +1,19 @@
+<p>
+  <label><%= l(:exception_handler_label_email_recipients) %></label><br /><label><small><%= l(:exception_handler_label_separate_multiple_emails_with_commas) %></small></label><%= text_area_tag 'settings[exception_handler_recipients]', @settings['exception_handler_recipients'], :rows => 5, :cols => 60 %>
+</p>
+
+<p>
+  <label><%= l(:exception_handler_label_sender_address)%></label><%= text_field_tag 'settings[exception_handler_sender_address]', @settings['exception_handler_sender_address'], :size => 60 %>
+</p>
+
+<p>
+  <label><%= l(:exception_handler_label_subject_prefix)%></label><%= text_field_tag 'settings[exception_handler_prefix]', @settings['exception_handler_prefix'], :size => 15 %>
+</p>
+
+<p>
+  <label><%= l(:exception_handler_label_email_format)%></label><%= select_tag 'settings[exception_handler_email_format]', options_for_select(['text', 'html'], @settings['exception_handler_email_format']) %>
+</p>
+
+<p>
+  <%= link_to l(:exception_handler_label_test_settings), { :controller => 'example_exception'}, :target => '_blank' %> <%= l(:exception_handler_label_will_open_in_a_new_window) %>
+</p>

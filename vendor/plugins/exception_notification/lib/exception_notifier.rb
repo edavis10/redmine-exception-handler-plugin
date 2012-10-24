@@ -1,66 +1,74 @@
-require 'pathname'
+require 'action_dispatch'
+require 'exception_notifier/notifier'
+require 'exception_notifier/campfire_notifier'
 
-# Copyright (c) 2005 Jamis Buck
-#
-# Permission is hereby granted, free of charge, to any person obtaining
-# a copy of this software and associated documentation files (the
-# "Software"), to deal in the Software without restriction, including
-# without limitation the rights to use, copy, modify, merge, publish,
-# distribute, sublicense, and/or sell copies of the Software, and to
-# permit persons to whom the Software is furnished to do so, subject to
-# the following conditions:
-#
-# The above copyright notice and this permission notice shall be
-# included in all copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-class ExceptionNotifier < ActionMailer::Base
-  @@sender_address = %("Exception Notifier" <exception.notifier@default.com>)
-  cattr_accessor :sender_address
+class ExceptionNotifier
 
-  @@exception_recipients = []
-  cattr_accessor :exception_recipients
+  def self.default_ignore_exceptions
+    [].tap do |exceptions|
+      exceptions << 'ActiveRecord::RecordNotFound'
+      exceptions << 'AbstractController::ActionNotFound'
+      exceptions << 'ActionController::RoutingError'
+    end
+  end
 
-  @@email_prefix = "[ERROR] "
-  cattr_accessor :email_prefix
+  def self.default_ignore_crawlers
+    []
+  end
 
-  @@sections = %w(request session environment backtrace)
-  cattr_accessor :sections
+  def initialize(app, options = {})
+    @app, @options = app, options
 
-  self.template_root = "#{File.dirname(__FILE__)}/../views"
+    Notifier.default_sender_address       = @options[:sender_address]
+    Notifier.default_exception_recipients = @options[:exception_recipients]
+    Notifier.default_email_prefix         = @options[:email_prefix]
+    Notifier.default_email_format         = @options[:email_format]
+    Notifier.default_sections             = @options[:sections]
+    Notifier.default_background_sections  = @options[:background_sections]
+    Notifier.default_verbose_subject      = @options[:verbose_subject]
+    Notifier.default_normalize_subject    = @options[:normalize_subject]
+    Notifier.default_smtp_settings        = @options[:smtp_settings]
 
-  def self.reloadable?() false end
+    @campfire = CampfireNotifier.new @options[:campfire]
 
-  def exception_notification(exception, controller, request, data={})
-    content_type "text/plain"
+    @options[:ignore_exceptions] ||= self.class.default_ignore_exceptions
+    @options[:ignore_crawlers]   ||= self.class.default_ignore_crawlers
+    @options[:ignore_if]         ||= lambda { |env, e| false }
+  end
 
-    subject    "#{email_prefix}#{controller.controller_name}##{controller.action_name} (#{exception.class}) #{exception.message.inspect}"
+  def call(env)
+    @app.call(env)
+  rescue Exception => exception
+    options = (env['exception_notifier.options'] ||= Notifier.default_options)
+    options.reverse_merge!(@options)
 
-    recipients exception_recipients
-    from       sender_address
+    unless ignored_exception(options[:ignore_exceptions], exception)       ||
+           from_crawler(options[:ignore_crawlers], env['HTTP_USER_AGENT']) ||
+           conditionally_ignored(options[:ignore_if], env, exception)
+      Notifier.exception_notification(env, exception).deliver
+      @campfire.exception_notification(exception)
+      env['exception_notifier.delivered'] = true
+    end
 
-    body       data.merge({ :controller => controller, :request => request,
-                  :exception => exception, :host => (request.env["HTTP_X_FORWARDED_HOST"] || request.env["HTTP_HOST"]),
-                  :backtrace => sanitize_backtrace(exception.backtrace),
-                  :rails_root => rails_root, :data => data,
-                  :sections => sections })
+    raise exception
   end
 
   private
 
-    def sanitize_backtrace(trace)
-      re = Regexp.new(/^#{Regexp.escape(rails_root)}/)
-      trace.map { |line| Pathname.new(line.gsub(re, "[RAILS_ROOT]")).cleanpath.to_s }
-    end
+  def ignored_exception(ignore_array, exception)
+    Array.wrap(ignore_array).map(&:to_s).include?(exception.class.name)
+  end
 
-    def rails_root
-      @rails_root ||= Pathname.new(RAILS_ROOT).cleanpath.to_s
-    end
+  def from_crawler(ignore_array, agent)
+    ignore_array.each do |crawler|
+      return true if (agent =~ Regexp.new(crawler))
+    end unless ignore_array.blank?
+    false
+  end
 
+  def conditionally_ignored(ignore_proc, env, exception)
+    ignore_proc.call(env, exception)
+  rescue Exception => ex
+    false
+  end
 end
