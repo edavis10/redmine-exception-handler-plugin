@@ -4,7 +4,6 @@ Dir[File.join(Redmine::Plugin.directory,'redmine_exception_handler','vendor','pl
   path = File.join(dir, 'lib')
   $LOAD_PATH << path
   ActiveSupport::Dependencies.autoload_paths << path
-#  Rails::Engine::Configuration.autoload_once_paths.delete(path)
 end
 
 Redmine::Plugin.register :redmine_exception_handler do
@@ -23,15 +22,7 @@ Redmine::Plugin.register :redmine_exception_handler do
   
 end
 
-
 require_dependency 'exception_notification'
 ExceptionNotifier::Notifier.send(:include, ExceptionHandler::RedmineNotifierPatch)
 
-settings = Setting.plugin_redmine_exception_handler
-RedmineApp::Application.config.middleware.use ExceptionNotifier,
-  :email_prefix => settings['exception_handler_prefix'],
-  :sender_address => settings['exception_handler_sender_address'],
-  :exception_recipients => settings['exception_handler_recipients'].split(',').map(&:strip),
-  :email_format => (settings['exception_handler_email_format'] || 'text').to_sym
-
-RedmineApp::Application.config.after_initialize do; end
+RedmineApp::Application.config.middleware.use ExceptionNotifier
