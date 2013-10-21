@@ -10,7 +10,7 @@ The Redmine Exception Handler plugin will allow Redmine to send emails when an e
 
 == Install
 
-1. Follow the Redmine plugin installation steps at: http://www.redmine.org/wiki/redmine/Plugins Make sure the plugin is installed to +vendor/plugins/redmine_exception_handler+
+1. Follow the Redmine plugin installation steps at: http://www.redmine.org/wiki/redmine/Plugins Make sure the plugin is installed to +plugins/redmine_exception_handler+
 2. Run bundle install
 3. Login to Redmine as an Administrator
 4. Setup your mail settings in the Plugin settings panel
