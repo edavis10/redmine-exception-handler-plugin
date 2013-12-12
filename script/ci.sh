@@ -86,6 +86,7 @@ install_plugin_gemfile()
   setenv
 
   mkdir $REDMINE_DIR/$PATH_TO_PLUGINS/$PLUGIN_NAME
+  rm -f "$REDMINE_DIR/$PATH_TO_PLUGINS/$PLUGIN_NAME/Gemfile"
   ln -s "$PATH_TO_PLUGIN/config/Gemfile.travis" "$REDMINE_DIR/$PATH_TO_PLUGINS/$PLUGIN_NAME/Gemfile"
 }
 
