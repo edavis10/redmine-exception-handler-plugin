@@ -24,7 +24,7 @@ License
 -------
 
 This plugin is licensed under the GNU GPL v2.
-See COPYRIGHT.txt and GPL.txt for details.
+See COPYRIGHT and COPYING for details.
 
 Help
 ----
