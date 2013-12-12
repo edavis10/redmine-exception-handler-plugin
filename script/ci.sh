@@ -3,7 +3,6 @@ set -e # exit if any command fails
 
 setenv() {
   export RAILS_ENV=test
-  export IN_RBL_TESTENV=true
   export PATH_TO_PLUGIN=$(pwd)
   export RUBY_VERSION=$(ruby -e 'print RUBY_VERSION')
   if [[ -z "$REDMINE" ]]; then
@@ -143,9 +142,9 @@ run_tests()
   pushd $REDMINE_DIR 1> /dev/null
 
   if [ "$REDMINE" == "master" ] && [ "$RUBY_VERSION"  == "1.9.3" ]; then
-    bundle exec rake redmine:plugins:ldap_sync:coveralls:test $TRACE
+    bundle exec rake redmine:plugins:exception_handler:coveralls:test $TRACE
   else
-    bundle exec rake redmine:plugins:ldap_sync:test $TRACE
+    bundle exec rake redmine:plugins:exception_handler:test $TRACE
   fi
 
   popd 1> /dev/null
