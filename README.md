@@ -1,4 +1,4 @@
-Redmine Exception Handler [![Build Status](https://travis-ci.org/thorin/redmine_exception_handler.png?branch=master)](https://travis-ci.org/thorin/redmine_exception_handler.png?branch=master) [![Coverage Status](https://coveralls.io/repos/thorin/redmine_exception_handler/badge.png?branch=master)](https://coveralls.io/r/thorin/redmine_exception_handler?branch=master)
+Redmine Exception Handler [![Build Status](https://travis-ci.org/thorin/redmine_exception_handler.png?branch=master)](https://travis-ci.org/thorin/redmine_exception_handler?branch=master) [![Coverage Status](https://coveralls.io/repos/thorin/redmine_exception_handler/badge.png?branch=master)](https://coveralls.io/r/thorin/redmine_exception_handler?branch=master)
 =========================
 
 The Redmine Exception Handler plugin will allow Redmine to send emails when an exception or error occurs.
