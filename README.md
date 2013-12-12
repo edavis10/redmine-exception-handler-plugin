@@ -1,4 +1,4 @@
-Redmine Exception Handler plugin
+Redmine Exception Handler plugin ![Build Status](https://travis-ci.org/thorin/redmine_exception_handler.png?branch=master) [![Coverage Status](https://coveralls.io/repos/thorin/redmine_exception_handler/badge.png?branch=master)](https://coveralls.io/r/thorin/redmine_exception_handler?branch=master)
 ================================
 
 The Redmine Exception Handler plugin will allow Redmine to send emails when an exception or error occurs.
@@ -13,7 +13,7 @@ Features
 Install
 -------
 
-1. Follow the Redmine plugin installation steps at: [http://www.redmine.org/wiki/redmine/Plugins](http://www.redmine.org/wiki/redmine/Plugins)  
+1. Follow the Redmine plugin installation steps at: [http://www.redmine.org/wiki/redmine/Plugins](http://www.redmine.org/wiki/redmine/Plugins)
    Make sure the plugin is installed to `plugins/redmine_exception_handler`
 2. Run bundle install
 3. Login to Redmine as an Administrator
@@ -23,7 +23,7 @@ Install
 License
 -------
 
-This plugin is licensed under the GNU GPL v2.  
+This plugin is licensed under the GNU GPL v2.
 See COPYRIGHT.txt and GPL.txt for details.
 
 Help
