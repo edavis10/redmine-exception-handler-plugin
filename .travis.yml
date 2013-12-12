@@ -3,7 +3,6 @@ language: ruby
 timeouts:
   bundle: 600
 rvm:
- - 1.8.7
  - 1.9.3
  - 2.0.0
 env:
@@ -11,17 +10,13 @@ env:
    - REDMINE_DIR=./workspace/redmine
    - PLUGIN_NAME=redmine_exception_handler
   matrix:
-   - REDMINE=2.2.4
    - REDMINE=2.4-stable
    - REDMINE=v3.8.0
    - REDMINE=master
 matrix:
   exclude:
    - rvm: 2.0.0
-     env: REDMINE=2.2.4
-     gemfile: workspace/redmine/Gemfile
-   - rvm: 1.8.7
-     env: REDMINE=v3.8.0
+     env: REDMINE=2.4-stable
      gemfile: workspace/redmine/Gemfile
    - rvm: 2.0.0
      env: REDMINE=v3.8.0
