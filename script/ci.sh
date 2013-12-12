@@ -128,6 +128,7 @@ prepare_plugin()
 
   pushd $REDMINE_DIR 1> /dev/null
 
+  rm -f "$PATH_TO_PLUGIN/Gemfile"
   ln -s $PATH_TO_PLUGIN/* $PATH_TO_PLUGINS/$PLUGIN_NAME
 
   trace 'Prepare plugins'
