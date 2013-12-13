@@ -1,11 +1,5 @@
 require 'redmine'
 
-Dir[File.join(Redmine::Plugin.directory,'redmine_exception_handler','vendor','plugins','*')].each do |dir|
-  path = File.join(dir, 'lib')
-  $LOAD_PATH << path
-  ActiveSupport::Dependencies.autoload_paths << path
-end
-
 Redmine::Plugin.register :redmine_exception_handler do
   name 'Redmine Exception Handler plugin'
   author 'Eric Davis'
